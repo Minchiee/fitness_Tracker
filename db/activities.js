@@ -19,7 +19,22 @@ async function getActivityByName(name) {
 
 // return the new activity
 async function createActivity({ name, description }) {
+  try {
+    const {rows: [user],
+    }= await client.query(
+      `
+      INSERT INTO activity(name, description)
+      VALUES ($1, $2)
+      ON CONFLICT (name) DO NOTHING
+      RETURNING *;
+      `,
+      [name, description]
+    );
 
+    return user;
+  } catch (error) {
+    throw error;
+  }
 }
 // select and return an array of all activities
 async function attachActivitiesToRoutines(routines) {

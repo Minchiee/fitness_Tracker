@@ -10,7 +10,6 @@ async function createUser({ username, password }) {
 
   try {
     const { rows: [user] } = await client.query(`
-    
   INSERT INTO users(username, password)
   VALUES ($1, $2)
   ON CONFLICT (username) DO NOTHING
@@ -33,7 +32,7 @@ async function getUser({ username, password }) {
 async function getUserById(userId) {
 try {
   const { rows: [user] } = await client.query(`
-  SELECT id, username, name
+  SELECT (username)
   FROM users
   WHERE id=${userId}
   `);
@@ -41,6 +40,7 @@ try {
   if (!user) {
     return null
   }
+  console.log(user)
   return user;
 } catch (error) {
   throw error;
