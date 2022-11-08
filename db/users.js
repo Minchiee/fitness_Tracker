@@ -1,12 +1,12 @@
 /* eslint-disable no-useless-catch */
 const client = require("./client");
-
+const bcrypt = require("bcrypt");
 // database functions
 
 // user functions
 async function createUser({ username, password }) {
-  // const SALT_COUNT = 10;
-  // const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
+  const SALT_COUNT = 10;
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
 
   try {
     const { rows: [user] } = await client.query(`
@@ -24,10 +24,10 @@ async function createUser({ username, password }) {
 }
 
 async function getUser({ username, password }) {
-//   const user = await getUserByUserName(username);
-//   const hashedPassword = user.password;
-// // isValid will be a boolean based on wether the password matches the hashed password
-//   const isValid = await bcrypt.compare(password, hashedPassword)
+  const user = await getUserByUserName(username);
+  const hashedPassword = user.password;
+// isValid will be a boolean based on wether the password matches the hashed password
+  const isValid = await bcrypt.compare(password, hashedPassword)
 }
 
 async function getUserById(userId) {
