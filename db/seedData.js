@@ -41,6 +41,15 @@ async function createTables() {
     goal TEXT NOT NULL
   );
 
+  CREATE TABLE RoutineActivities(
+    id SERIAL PRIMARY KEY,
+    "routineId" INTEGER REFERENCES routines (Id),
+    "activityId" INTEGER REFERENCES activities (Id),
+    duration INTEGER,
+    count INTEGER,
+    UNIQUE ("routineId", "activityId")
+  );
+
 
   `)
 
@@ -229,5 +238,5 @@ async function rebuildDB() {
 module.exports = {
   rebuildDB,
   dropTables,
-  createTables,
+  createTables
 }
