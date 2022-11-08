@@ -39,7 +39,7 @@ async function createRoutine({creatorId, isPublic, name, goal}) {
   try {
     const {rows:[user],
     } = await client.query(`
-    INSERT INTO routine("creatorId", "isPublic", name, goal)
+    INSERT INTO routines("creatorId", "isPublic", name, goal)
     VALUES ($1, $2, $3, $4)
     RETURNING *;
     `,
