@@ -76,7 +76,7 @@ describe("DB Users", () => {
 
   });
 
-  xdescribe("getUser({ username, password })", () => {
+  describe("getUser({ username, password })", () => {
 
     it("returns the user when the password verifies", async () => {
       const fakeUserData = {
@@ -116,7 +116,7 @@ describe("DB Users", () => {
     });
 
   });
-  xdescribe("getUserById", () => {
+  describe("getUserById", () => {
 
     it("Gets a user based on the user Id", async () => {
       const fakeUser = await createFakeUser("Jacob");
