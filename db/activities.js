@@ -3,7 +3,16 @@ const client = require("./client")
 
 // database functions
 async function getAllActivities() {
-
+  try {
+    const {row
+    } = await client.query(`
+    SELECT *
+    FROM activities;
+    `);
+    return row;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getActivityById(id) {
@@ -23,7 +32,7 @@ async function createActivity({ name, description }) {
     const {rows: [user],
     }= await client.query(
       `
-      INSERT INTO activity(name, description)
+      INSERT INTO activities(name, description)
       VALUES ($1, $2)
       ON CONFLICT (name) DO NOTHING
       RETURNING *;

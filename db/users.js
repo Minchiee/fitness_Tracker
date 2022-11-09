@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 
 // user functions
 async function createUser({ username, password }) {
-  const SALT_COUNT = 10;
-  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+  // const SALT_COUNT = 10;
+  // const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 
   try {
     const {
@@ -29,9 +29,9 @@ async function createUser({ username, password }) {
 
 async function getUser({ username, password }) {
   const user = await getUserByUsername(username);
-  const hashedPassword = user.password;
-  // isValid will be a boolean based on wether the password matches the hashed password
-  const isValid = await bcrypt.compare(password, hashedPassword);
+  // const hashedPassword = user.password;
+  // // isValid will be a boolean based on wether the password matches the hashed password
+  // const isValid = await bcrypt.compare(password, hashedPassword);
 
   try {
     if (user.password == password) {

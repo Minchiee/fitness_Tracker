@@ -6,10 +6,12 @@ async function dropTables() {
   console.log("Dropping All Tables...")
   // drop all tables, in the correct order
   await client.query(`
+  
   DROP TABLE IF EXISTS users cascade;
-  DROP TABLE IF EXISTS activity cascade;
+  DROP TABLE IF EXISTS activities cascade;
   DROP TABLE IF EXISTS routines cascade;
-  DROP TABLE IF EXISTS RoutineActivities;
+  DROP TABLE IF EXISTS RoutineActivities cascade;
+  
   `)
 
 
@@ -28,10 +30,10 @@ async function createTables() {
     password varchar(255) NOT NULL
   );
 
-  CREATE TABLE activity(
+  CREATE TABLE activities(
     id SERIAL PRIMARY KEY,
     name varchar(255) UNIQUE NOT NULL,
-    description text NOT NULL
+    description TEXT NOT NULL
   );
 
   CREATE TABLE routines(
@@ -44,13 +46,12 @@ async function createTables() {
 
   CREATE TABLE RoutineActivities(
     id SERIAL PRIMARY KEY,
-    "routineId" INTEGER REFERENCES routines (Id),
-    "activityId" INTEGER REFERENCES activity (Id),
+    "routineId" INTEGER REFERENCES routines (id),
+    "activityId" INTEGER REFERENCES activities (id),
     duration INTEGER,
     count INTEGER,
     UNIQUE ("routineId", "activityId")
   );
-
 
   `)
 
