@@ -5,7 +5,7 @@ async function getRoutineById(id){
   try {
     const {rows:[user],
     } = await client.query(`
-    INSERT INTO routine(id)
+    INSERT INTO routines(id)
     VALUES($1)
     RETURNING *;
     `,
