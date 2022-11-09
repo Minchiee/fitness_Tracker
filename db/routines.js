@@ -3,21 +3,31 @@ const client = require('./client');
 
 async function getRoutineById(id){
   try {
-    const {rows:[user],
+    const {rows:[routines],
     } = await client.query(`
-    INSERT INTO routines(id)
-    VALUES($1)
-    RETURNING *;
-    `,
-    [id]);
+    SELECT *
+    FROM routines
+    WHERE id=${id};
+    `
+    );
 
-    return user;
+    return routines;
   } catch (error) {
     throw error;
   }
 }
 
 async function getRoutinesWithoutActivities(){
+  try {
+    const {rows: [routines],} = await client.query(`
+    SELECT *
+    FROM routines;
+    `);
+
+    return routines
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getAllRoutines() {
@@ -25,7 +35,7 @@ async function getAllRoutines() {
     const {rows} = await client.query(`
     SELECT * FROM routines;
     `);
-    console.log(rows)
+    console.log(rows, "this is the routines")
     return rows;
   } catch (error) {
     throw error;
@@ -33,6 +43,19 @@ async function getAllRoutines() {
 }
 
 async function getAllRoutinesByUser({username}) {
+  try {
+    const { rows: [routinesUser], } = await client.query(`
+    SELECT username
+    FROM routines
+    WHERE "authorId"=${ username }
+    `)
+
+    const routines = await Promise.all(routinesUser.map(
+      routine => getRoutineById()
+    ))
+  } catch (error) {
+    
+  }
 }
 
 async function getPublicRoutinesByUser({username}) {
