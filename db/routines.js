@@ -21,7 +21,15 @@ async function getRoutinesWithoutActivities(){
 }
 
 async function getAllRoutines() {
-  
+  try {
+    const {rows} = await client.query(`
+    SELECT * FROM routines;
+    `);
+    console.log(rows)
+    return rows;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getAllRoutinesByUser({username}) {
@@ -38,7 +46,7 @@ async function getPublicRoutinesByActivity({id}) {
 
 async function createRoutine({creatorId, isPublic, name, goal}) {
   try {
-    const {rows:[user],
+    const {rows:[routines],
     } = await client.query(`
     INSERT INTO routines("creatorId", "isPublic", name, goal)
     VALUES ($1, $2, $3, $4)
@@ -46,7 +54,7 @@ async function createRoutine({creatorId, isPublic, name, goal}) {
     `,
     [creatorId, isPublic, name, goal]);
 
-    return user;
+    return routines;
   } catch (error) {
     throw error;
   }

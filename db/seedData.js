@@ -10,7 +10,7 @@ async function dropTables() {
   DROP TABLE IF EXISTS users cascade;
   DROP TABLE IF EXISTS activities cascade;
   DROP TABLE IF EXISTS routines cascade;
-  DROP TABLE IF EXISTS RoutineActivities cascade;
+  DROP TABLE IF EXISTS routine_activities cascade;
   
   `)
 
@@ -44,7 +44,7 @@ async function createTables() {
     goal TEXT NOT NULL
   );
 
-  CREATE TABLE RoutineActivities(
+  CREATE TABLE routine_activities(
     id SERIAL PRIMARY KEY,
     "routineId" INTEGER REFERENCES routines(id),
     "activityId" INTEGER REFERENCES activities(id),
