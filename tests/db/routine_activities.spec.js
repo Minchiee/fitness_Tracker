@@ -23,7 +23,7 @@ const {
 } = require("../helpers")
 
 
-xdescribe("DB Routine Activities", () => {
+describe("DB Routine Activities", () => {
  
   let fakeActivity
   let fakeRoutine
@@ -42,7 +42,7 @@ xdescribe("DB Routine Activities", () => {
     }
   })
 
-  xdescribe("getRoutineActivityById", () => {
+  describe("getRoutineActivityById", () => {
     it("should return the routine activity by id", async () => {
       const fakeRoutineActivity = await createFakeRoutineActivity()
       const routineActivity = await getRoutineActivityById(

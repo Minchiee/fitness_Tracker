@@ -127,7 +127,7 @@ describe("DB Routines", () => {
       expectRoutinesToContainRoutine(routines, fakePrivateRoutine);
     });
 
-    xit("includes their activities", async () => {
+    it("includes their activities", async () => {
       const routines = await getAllRoutines();
       const routine = routines.find(
         (routine) => routine.id === fakeRoutine.id
@@ -136,18 +136,18 @@ describe("DB Routines", () => {
       expectRoutineToContainActivity(routine, fakeActivity2);
     });
 
-    xit("should not include a routine more than once", async () => {
+    it("should not include a routine more than once", async () => {
       const routines = await getAllRoutines();
       expectRoutinesNotToContainDuplicates(routines, fakeRoutine);
     });
 
-    xit("includes username, from users join, aliased as creatorName", async () => {
+    it("includes username, from users join, aliased as creatorName", async () => {
       const routines = await getAllRoutines();
       const routine = routines.find(routine => routine.id === fakeRoutine.id);
       expect(routine.creatorName).toEqual(fakeUser.username);
     });
 
-    xit("includes duration and count on activities, from routine_activities join", async () => {
+    it("includes duration and count on activities, from routine_activities join", async () => {
       const routines = await getAllRoutines();
       const routine = routines.find(routine => routine.id === fakeRoutine.id);
       const activity = routine.activities.find(activity => activity.id === fakeActivity.id);
@@ -155,7 +155,7 @@ describe("DB Routines", () => {
       expect(activity.count).toEqual(fakeRoutineActivity.count);
     });
 
-    xit("includes the routineId and routineActivityId on activities", async () => {
+    it("includes the routineId and routineActivityId on activities", async () => {
       const routines = await getAllRoutines();
       const routine = routines.find(routine => routine.id === fakeRoutine.id);
       const activity = routine.activities.find(activity => activity.id === fakeActivity.id);
@@ -368,7 +368,7 @@ describe("DB Routines", () => {
     });
   });
 
-  xdescribe("createRoutine", () => {
+  describe("createRoutine", () => {
     it("creates and returns the new routine", async () => {
       const user = await createFakeUser();
       const routine = await createRoutine({

@@ -35,7 +35,6 @@ async function getAllRoutines() {
     const {rows} = await client.query(`
     SELECT * FROM routines;
     `);
-    console.log(rows, "this is the routines")
     return rows;
   } catch (error) {
     throw error;
@@ -54,7 +53,7 @@ async function getAllRoutinesByUser({username}) {
       routine => getRoutineById()
     ))
   } catch (error) {
-    
+    throw error;
   }
 }
 
