@@ -84,6 +84,32 @@ async function createRoutine({creatorId, isPublic, name, goal}) {
 }
 
 async function updateRoutine({id, ...fields}) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  // return early if this is called without fields
+  if (setString.length === 0) {
+    return;
+  }
+
+  try {
+    const {
+      rows: [routine],
+    } = await client.query(
+      `
+      UPDATE routines
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *;
+    `,
+      Object.values(fields)
+    );
+
+    return routine;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function destroyRoutine(id) {
