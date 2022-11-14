@@ -44,9 +44,11 @@ async function getRoutineActivitiesByRoutine({id}) {
   try {
     const {rows: [routines],
     }= await client.query(`
-    SELECT *
+    SELECT routine_activities.*
     FROM routine_activities
-    WHERE "activityId"=${id}
+    JOIN routines
+    ON routines.id = routine_activities.id
+    WHERE "creatorId"=${id}
     `);
 
     return routines;
@@ -87,10 +89,10 @@ async function updateRoutineActivity ({id, ...fields}) {
 async function destroyRoutineActivity(id) {
   try {
     await client.query(`
-    DELETE * FROM routine_activities
-    WHERE id=${id}
-    `);
-
+    DELETE FROM routine_activities
+    WHERE id=$1
+    `, [id]);
+    
   } catch (error) {
     throw error;
   }
