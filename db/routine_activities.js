@@ -11,7 +11,6 @@ async function getRoutineActivityById(id){
   WHERE id=${id};
   `);
 
-    console.log(routines);
     return routines;
   } catch (error) {
     throw error;
@@ -43,12 +42,14 @@ async function addActivityToRoutine({
 
 async function getRoutineActivitiesByRoutine({id}) {
   try {
-    const {rows: [routine_activities],
+    const {rows: [routines],
     }= await client.query(`
-    SELECT 
+    SELECT *
+    FROM routine_activities
+    WHERE "activityId"=${id}
     `);
 
-    return routine_activities;
+    return routines;
   } catch (error) {
     throw error;
   }

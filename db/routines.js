@@ -100,8 +100,10 @@ async function getPublicRoutinesByActivity({id}) {
     FROM routines
     JOIN users
     ON routines."creatorId" = users.id
-    WHERE "isPublic"=true
-    `);
+    JOIN routine_activities
+    ON routine_activities."routineId" = routines.id
+    WHERE "isPublic"=true AND routine_activities."activityId" = $1
+    `, [id]);
 
     return attachActivitiesToRoutines(rows)
   } catch (error) {
@@ -156,6 +158,17 @@ async function updateRoutine({id, ...fields}) {
 }
 
 async function destroyRoutine(id) {
+  try {
+    const { rows } = await client.query(`
+DELETE * FROM routines WHERE id=${id}
+    `, [id])
+
+
+
+    return rows
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {
