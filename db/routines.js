@@ -50,8 +50,10 @@ async function getAllRoutinesByUser({username}) {
     `)
 
     const routines = await Promise.all(routinesUser.map(
-      routine => getRoutineById()
-    ))
+      routine => getRoutineById( routine.id )
+    ));
+
+    return routines;
   } catch (error) {
     throw error;
   }
