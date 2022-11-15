@@ -7,7 +7,6 @@ const {JWT_SECRET} = process.env;
 
 // GET /api/health
 router.get('/health', async (req, res, next) => {
-    console.log("I am healthy");
     res.send({name: "health", message: "I'm healthy!"})
  });
  
