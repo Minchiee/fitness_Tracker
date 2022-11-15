@@ -41,7 +41,7 @@ describe("/api/activities", () => {
     })
   })
 
-  xdescribe("POST /api/activities (*)", () => {
+  describe("POST /api/activities (*)", () => {
     it("Creates a new activity", async () => {
       const { token } = await createFakeUserWithToken("bob")
 
