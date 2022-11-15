@@ -58,7 +58,6 @@ async function getUserById(userId) {
     if (!user) {
       return null;
     }
-    console.log(user);
     delete user.password;
     return user;
   } catch (error) {
