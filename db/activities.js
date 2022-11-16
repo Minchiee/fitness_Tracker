@@ -51,7 +51,7 @@ async function getActivityByName(name) {
 // return the new activity
 async function createActivity({ name, description }) {
   try {
-    const {rows: [user],
+    const {rows: [activity],
     }= await client.query(
       `
       INSERT INTO activities(name, description)
@@ -61,7 +61,7 @@ async function createActivity({ name, description }) {
       [name, description]
     );
 
-    return user;
+    return activity;
   } catch (error) {
     throw error;
   }
