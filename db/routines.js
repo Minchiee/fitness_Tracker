@@ -18,6 +18,15 @@ async function getRoutineById(id){
   }
 }
 
+async function getRoutineByName(name){
+  const {rows: [namedRoutine]} = await client.query(`
+  SELECT *
+  FROM routines
+  WHERE name='${name}';
+  `)
+  return namedRoutine
+}
+
 async function getRoutinesWithoutActivities(){
   try {
     const {rows: [routines],} = await client.query(`
@@ -158,17 +167,12 @@ async function updateRoutine({id, ...fields}) {
 }
 
 async function destroyRoutine(id) {
-  try {
-    const { rows } = await client.query(`
-DELETE * FROM routines WHERE id=${id}
-    `, [id])
-
-
-
-    return rows
-  } catch (error) {
-    throw error;
-  }
+  const {rows: [deletedRoutine]} = await client.query(`
+    DELETE FROM routines
+    WHERE id=${id}
+    RETURNING *
+  ;`)
+  return deletedRoutine
 }
 
 module.exports = {
@@ -182,4 +186,5 @@ module.exports = {
   createRoutine,
   updateRoutine,
   destroyRoutine,
+  getRoutineByName
 }

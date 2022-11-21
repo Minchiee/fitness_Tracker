@@ -6,7 +6,7 @@ const {JWT_SECRET} = process.env;
 // set `req.user` if possible
 
 // GET /api/health
-router.get('/health', async (req, res, next) => {
+router.get('/health', async (req, res) => {
     res.send({name: "health", message: "I'm healthy!"})
  });
  
@@ -49,7 +49,7 @@ router.use('/routines', routinesRouter);
 // ROUTER: /api/routine_activities
 const routineActivitiesRouter = require('./routineActivities');
 router.use('/routine_activities', routineActivitiesRouter);
-router.use((error, req, res, next) => {
+router.use((error, req, res) => {
  res.send({
    name: error.name,
    message: error.message,

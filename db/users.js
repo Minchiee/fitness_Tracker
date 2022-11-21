@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 const client = require("./client");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 // database functions
 
 // user functions

@@ -60,7 +60,7 @@ describe("/api/activities", () => {
       expect(response.body).toMatchObject(activityData)
     })
 
-    xit("responds with an error when a activity already exists with the same name", async () => {
+    it("responds with an error when a activity already exists with the same name", async () => {
       const { token } = await createFakeUserWithToken("alice")
 
       await createFakeActivity("Push Ups", "Do 30 reps")
@@ -153,7 +153,7 @@ describe("/api/activities", () => {
     })
   })
 
-  xdescribe("GET /api/activities/:activityId/routines", () => {
+  describe("GET /api/activities/:activityId/routines", () => {
     it("Get a list of all public routines which feature that activity", async () => {
       const { fakeRoutines } = await createFakeUserWithRoutines("Allen")
       const fakeActivity = await createFakeActivity(
