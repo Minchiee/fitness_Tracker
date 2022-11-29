@@ -16,8 +16,9 @@ router.patch('/:routineActivityId', requireUser, async (req, res, next) => {
                 res.send(updatedActivity)
             } else {
                 next({
+                    error: "error",
                     name: 'UnauthorizedUser',
-                    message: `User ${req.user.username} is not allowed to update ${routine.name}`
+                    message: `User ${req.user.username} is not allowed to update.`
                 })
             }
         } else {

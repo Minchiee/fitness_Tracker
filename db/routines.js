@@ -28,16 +28,12 @@ async function getRoutineByName(name){
 }
 
 async function getRoutinesWithoutActivities(){
-  try {
-    const {rows: [routines],} = await client.query(`
-    SELECT *
-    FROM routines;
-    `);
+  const {rows: routines} = await client.query(`
+  SELECT *
+  FROM routines;
+  `)
 
-    return routines
-  } catch (error) {
-    throw error;
-  }
+  return routines;
 }
 
 async function getAllRoutines() {

@@ -73,30 +73,35 @@ router.patch("/:routineId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/routines/:routineId
-router.delete("/:routineId", requireUser, async (req, res, next) => {
-  try {
-    const routineId = req.params.routineId;
-    const existingRoutine = await getRoutineById(routineId);
-    if (existingRoutine) {
-      if (existingRoutine.creatorId === req.user.id) {
-        const deletedRoutine = await destroyRoutine(routineId);
-        res.send(deletedRoutine);
-      } else {
-        next({
-          name: "UnauthorizedUser",
-          message: `User ${req.user.username} is not allowed to delete ${existingRoutine.name}`,
-        });
-      }
-    } else {
-      next({
-        name: "RoutineNotFound",
-        message: `Routine ${routineId} not found`,
-      });
+router.delete('/:routineId', requireUser, async (req, res, next) => {
+    try {
+        const routineId = req.params.routineId
+        const existingRoutine = await getRoutineById(routineId)
+        if (existingRoutine) {
+            if (existingRoutine.creatorId === req.user.id) {
+                const deletedRoutine = await destroyRoutine(routineId)
+                res.send(deletedRoutine)
+            } else {
+                res.status(403)
+                next({
+                    error: 'some number',
+                    name: 'UnauthorizedUser',
+                    message: `User ${req.user.username} is not allowed to delete ${existingRoutine.name}`
+                })
+            }
+        } else {
+            next({
+                error: 'some number',
+                name: 'RoutineNotFound',
+                message: `Routine ${routineId} not found`
+            })
+        }
+
+    } catch ({ error, name, message }) {
+        next({ error, name, message })
     }
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
+})
+
 // POST /api/routines/:routineId/activities
 router.post("/:routineId/activities", requireUser, async (req, res, next) => {
   try {
